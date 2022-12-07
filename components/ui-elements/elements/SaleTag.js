@@ -14,7 +14,7 @@ import { StyleSheet, Text, View } from "react-native";
  * @param {SaleTag} props.tag
  * @returns {JSX.Element|null}
  */
-export default function SaleTag({ tag, style = {} }) {
+export default function SaleTag({ tag, style }) {
     if (!tag) return null
     const styles = renderStyles(tag.color, style)
 
@@ -39,10 +39,11 @@ function renderStyles(color, style) {
         tagText: {
             color: '#fff',
             fontSize: 12,
+            fontFamily: 'Raleway-Medium',
         },
         tag: {
             paddingHorizontal: 12,
-            paddingVertical: 2,
+            paddingBottom: 2,
             borderRadius: 12,
             ...style
         }

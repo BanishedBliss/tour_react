@@ -2,20 +2,10 @@ import React from "react";
 import {StyleSheet, Text, View} from "react-native";
 import {Button} from "../../ui-elements";
 
-export default function AdvantagesSection({ advantages, style }) {
+export default function BlueTextSection({ content, style }) {
     return (
         <View style={ [styles.advantages, style] }>
-            <Text style={ [styles.textWhite, styles.advantagesHeading] }>ЧЕМ МЫ МОЖЕМ{"\n"} ВАМ ПОМОЧЬ:</Text>
-            <View style={ styles.advantagesUl }>
-                { advantages.map((advantage, index) => (
-                    <View key={ index } style={ styles.advantage }>
-                        <Text style={ [styles.textWhite, styles.ulDot] }>{"\u2022"}</Text>
-                        <Text style={ [styles.textWhite, styles.advantagesText] }>
-                            { advantage }
-                        </Text>
-                    </View>
-                ))}
-            </View>
+            { content.map((item, index) => renderBlockType(item.type, item.content, index)) }
 
             {/*<Text style={ [styles.textWhite, styles.advantagesHeading] }>
                 РАССЧИТАЙТЕ БЮДЖЕТ МЕРОПРИЯТИЯ САМОСТОЯТЕЛЬНО
@@ -29,6 +19,29 @@ export default function AdvantagesSection({ advantages, style }) {
     )
 }
 
+
+
+function renderBlockType(type, content, key) {
+    switch (type) {
+        case 'heading':
+            return (<Text key={ key } style={ [styles.textWhite, styles.advantagesHeading] }>{ content }</Text>)
+        case 'text':
+            return (<Text key={ key } style={ [styles.textWhite, styles.plainText] }>{ content }</Text>)
+        case 'ul':
+            return (
+                <View key={ key }>
+                    { content.map((item, index) => (
+                        <View key={ index } style={ styles.advantage }>
+                            <Text style={ [styles.textWhite, styles.ulDot] }>{"\u2022"}</Text>
+                            <Text style={ [styles.textWhite, styles.advantagesText] }>
+                                { item }
+                            </Text>
+                        </View>
+                    )) }
+                </View>
+            )
+    }
+}
 
 const styles = StyleSheet.create({
     contPadding: {
@@ -52,9 +65,6 @@ const styles = StyleSheet.create({
         fontSize: 20,
         marginBottom: 26,
     },
-    advantagesUl: {
-        //marginBottom: 48,
-    },
     ulDot: {
         paddingRight: 12,
         fontSize: 22,
@@ -67,5 +77,10 @@ const styles = StyleSheet.create({
     },
     button: {
         marginTop: 32,
+    },
+    plainText: {
+        fontFamily: 'Poppins-Regular',
+        fontSize: 15,
+        lineHeight: 22.5,
     }
 })
